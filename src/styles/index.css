@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 @import url('./toggle.css');
+@import url('./tags.css');
 :root {
   --bg-light: #f9f9f9;
   --bg-light-code: #d7d7d7;
   --text-light: #1a1a1a;
-  --bg-dark: #1a1a1a;
-  --text-dark: #f9f9f9;
+  --bg-dark: #1a181b;
+  --text-dark: #dee4eb;
   --accent: #4f46e5;
   --gray: #747474;
 }
 pre, code, .react-syntax-highlighter {
   font-size: 1rem !important;
-  /* background-color: var(--bg-light-code) !important; */
 }
 /* *{
   border: 1px solid magenta;
@@ -22,7 +22,7 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-light);
   color: var(--text-light);
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.6s, color 0.6s;
 }
 
 body.dark {
@@ -32,7 +32,7 @@ body.dark {
 
 .container {
   width: clamp(320px, 90%, 800px);
-  margin: 10vh auto;
+  margin: 2vh auto;
   padding: 2rem;
 }
 h2 {
@@ -85,4 +85,18 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.details-back{
+  position: absolute;
+  top: 0;
+  right: 100%;
+  flex-direction: row;
+  padding-right: 1rem;
+}
+.details-header{
+  position: relative;
+}
+.dot{
+  color: #4f46e5;
 }

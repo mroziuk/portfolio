@@ -1,27 +1,16 @@
-import { useEffect, useState } from "react";
-import { getAllPosts } from "../api/posts";
+import { useState, useEffect } from "react";
 
 export const usePosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      try {
-        const res = await getAllPosts();
-        setPosts(res.data);
-      } catch (err) {
-        console.error(err);
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetch();
+    fetch("/posts.json")
+      .then((res) => res.json())
+      .then((data) => setPosts(data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
 
-  return { posts, loading, error };
+  return { posts, loading };
 };

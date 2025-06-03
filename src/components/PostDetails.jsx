@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { usePosts } from "../hooks/usePosts";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -8,25 +9,65 @@ import {
   dracula,
   oneLight,
 } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import TagWithIcon from "./TagWithIcon";
+
 const PostDetails = ({ darkMode }) => {
   const { id } = useParams();
-  const { posts: posts, loading, error } = usePosts();
-  const post = posts.find((x) => x.id == id);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!post) return <p>Post not found</p>;
+  const { posts, loading: postsLoading, error: postsError } = usePosts();
+  const postMeta = posts.find((x) => String(x.id) === id);
+
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchMarkdown = async () => {
+      try {
+        const res = await fetch(`/posts/${id}.md`);
+        if (!res.ok) throw new Error("Markdown not found");
+        const text = await res.text();
+        const match = text.match(/^---\s*([\s\S]*?)\s*---\s*([\s\S]*)$/);
+        if (match) {
+          const [, _frontmatter, markdownContent] = match;
+          setContent(markdownContent);
+        } else {
+          setContent(text);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMarkdown();
+  }, [id]);
+
+  if (postsLoading || loading) return <p>Loading...</p>;
+  if (postsError || error) return <p>Error: {postsError || error}</p>;
+  if (!postMeta) return <p>Post not found</p>;
 
   return (
     <div className="post-details">
-      <Link to="/">&larr; Home</Link>
-      <h2>{post.name}</h2>
-      <p>{post.date}</p>
+      <div className="details-header">
+        <Link className="details-back" to="/">
+          &larr;Home
+        </Link>
+        <h2>{postMeta.name}</h2>
+      </div>
+      <p>{postMeta.date}</p>
+      <div className="tags">
+        {postMeta.tags.map((tag) => (
+          <TagWithIcon key={tag} tag={tag} />
+        ))}
+      </div>
       <Markdown
         remarkPlugins={[remarkGfm]}
         components={{
           code({ inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             const theme = darkMode ? dracula : oneLight;
+
             return !inline && match ? (
               match[1] === "mermaid" ? (
                 <Mermaid chart={children} darkMode={darkMode} />
@@ -35,20 +76,21 @@ const PostDetails = ({ darkMode }) => {
                   style={theme}
                   PreTag="div"
                   language={match[1]}
-                  customStyle={{
-                    border: "1px solid black",
-                  }}
+                  customStyle={{ fontSize: "14px", borderRadius: "8px" }}
                   {...props}
                 >
-                  {String(children).replace("/\n$/", "")}
+                  {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               )
             ) : (
               <code
                 className={className}
                 {...props}
-                customStyle={{
+                style={{
                   backgroundColor: darkMode ? "#282a36" : "#f2f2f2",
+                  fontSize: "14px",
+                  padding: "0.2em 0.4em",
+                  borderRadius: "4px",
                 }}
               >
                 {children}
@@ -57,9 +99,10 @@ const PostDetails = ({ darkMode }) => {
           },
         }}
       >
-        {post.content}
+        {content}
       </Markdown>
     </div>
   );
 };
+
 export default PostDetails;

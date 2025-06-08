@@ -12,10 +12,10 @@ import {
 import TagWithIcon from "./TagWithIcon";
 
 const PostDetails = ({ darkMode }) => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const { posts, loading: postsLoading, error: postsError } = usePosts();
-  const postMeta = posts.find((x) => String(x.id) === id);
-
+  const postMeta = posts.find((x) => x.slug === slug);
+  console.log(slug);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ const PostDetails = ({ darkMode }) => {
   useEffect(() => {
     const fetchMarkdown = async () => {
       try {
-        const res = await fetch(`/posts/${id}.md`);
+        const res = await fetch(`/posts/${slug}.md`);
         if (!res.ok) throw new Error("Markdown not found");
         const text = await res.text();
         const match = text.match(/^---\s*([\s\S]*?)\s*---\s*([\s\S]*)$/);
@@ -41,7 +41,7 @@ const PostDetails = ({ darkMode }) => {
     };
 
     fetchMarkdown();
-  }, [id]);
+  }, [slug]);
 
   if (postsLoading || loading) return <p>Loading...</p>;
   if (postsError || error) return <p>Error: {postsError || error}</p>;

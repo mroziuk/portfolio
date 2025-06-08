@@ -4,11 +4,28 @@
   margin: 0.2rem;
   font-size: 1.2rem;
   width: 1.2rem;
+  cursor: pointer;
 }
-.post-title{
+.tag:hover{
+  transform: scale(1.05);
+}
+.icon {
+  margin: 0;
+  padding: 0;
+}
+.clear-tags {
+  align-items: center;
+  margin: 0.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 4px;
+  position: absolute;
+  right: 100%;
+}
+.post-title {
   position: relative;
 }
-.tag-container{
+.tag-container {
   position: absolute;
   top: 0;
   right: 100%;
@@ -18,4 +35,9 @@
 }
 .dark .tag {
   color: #fff;
+}
+.tag-list{
+  display: flex;
+  position: relative;
+  align-items: center;
 }

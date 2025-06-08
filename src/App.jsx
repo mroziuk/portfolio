@@ -26,8 +26,9 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<PostList />} />
+          <Route path="/tags/:tags" element={<PostList />} />
           <Route
-            path="/posts/:id"
+            path="/posts/:slug"
             element={<PostDetails darkMode={darkMode} />}
           />
         </Routes>

@@ -22,5 +22,4 @@ files.forEach((file) => {
 });
 
 fs.writeFileSync(outputFile, JSON.stringify(posts, null, 2));
-console.log('✅ posts.json generated');
     

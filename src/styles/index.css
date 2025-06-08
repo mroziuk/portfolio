@@ -100,3 +100,6 @@ a:hover {
 .dot{
   color: #4f46e5;
 }
+.main-link:hover{
+  text-decoration: none;
+}

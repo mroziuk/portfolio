@@ -1,0 +1,61 @@
+[
+  {
+    "name": "Angular",
+    "date": "2024-01-03",
+    "category": "post",
+    "tags": [
+      "Angular",
+      "JavaScript"
+    ],
+    "slug": "Angular"
+  },
+  {
+    "name": "Dark mode CSS",
+    "date": "2025-03-07",
+    "category": "post",
+    "tags": [
+      "CSS",
+      "JavaScript",
+      "React"
+    ],
+    "slug": "dark mode css"
+  },
+  {
+    "name": "Fancy ToString",
+    "date": "2025-03-22",
+    "category": "post",
+    "tags": [
+      "CS",
+      "NET"
+    ],
+    "slug": "formatowanie_typow_wlasnych"
+  },
+  {
+    "name": "Interview",
+    "date": "2025-02-11",
+    "category": "post",
+    "tags": [
+      "CS"
+    ],
+    "slug": "interview"
+  },
+  {
+    "name": "Javascript",
+    "date": "2025-01-07",
+    "category": "micro",
+    "tags": [
+      "JavaScript"
+    ],
+    "slug": "JavaScript"
+  },
+  {
+    "name": "MUI",
+    "date": "2024-10-12",
+    "category": "micro",
+    "tags": [
+      "CSS",
+      "React"
+    ],
+    "slug": "MUI"
+  }
+]
